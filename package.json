@@ -1,0 +1,31 @@
+{
+  "name": "myspotify",
+  "version": "1.0.0",
+  "description": "JavaScript application using Spotify API",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config ./config/webpack.config.js",
+    "prod": "webpack --config ./config/webpack.config.prod.js",
+    "dev": "webpack --config ./config/webpack.config.js"
+  },
+  "keywords": [
+    "javascript",
+    "webpack",
+    "node",
+    "npm",
+    "API",
+    "BEM",
+    "spotify"
+  ],
+  "author": "Artur Jankowiak",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "html-webpack-plugin": "^5.3.1",
+    "raw-loader": "^4.0.2",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  }
+}
