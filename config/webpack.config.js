@@ -13,11 +13,10 @@ module.exports = {
   },
   devServer: {
     open: true,
-
-  //   inline: false,
+    inline: false,
     contentBase: path.resolve(__dirname, "../", "public"),
-  //   port: 5001,
-  // },
+    port: 5001,
+  },
   module: {
     rules: [
       {
@@ -52,8 +51,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: "src/template.html",
-      title: "Spotify app",
+      template: "src/templates/template.html",
+      title: "nowa aplikacja",
     }),
   ],
 };
