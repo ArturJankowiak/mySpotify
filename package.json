@@ -4,7 +4,7 @@
   "description": "JavaScript application using Spotify API",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./config/webpack.config.js",
+    "start": "webpack serve --config ./config/webpack.config.js --progress",
     "prod": "webpack --config ./config/webpack.config.prod.js",
     "dev": "webpack --config ./config/webpack.config.js"
   },
@@ -21,8 +21,17 @@
   "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.27.0",
+    "eslint-webpack-plugin": "^2.5.4",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
+    "image-webpack-loader": "^7.0.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "node-sass": "^6.0.0",
     "raw-loader": "^4.0.2",
+    "sass-loader": "^11.1.1",
+    "style-loader": "^2.0.0",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",

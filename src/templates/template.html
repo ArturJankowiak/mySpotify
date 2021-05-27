@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript application using Spotify API</title>
+  </head>
+  <body onload="onPageLoad()">
+    <!-- <h1>działa? gggggg</h1>
+    <div></div>
+    <img src="images/mouse.jpg" alt="" />
+    <footer>footer</footer> -->
+
+    <div class="authorization">
+      <div class="authorization__tockenSection">
+        <div class="authorization__tockenSection--clientID">
+          <label for="clientId" class="authorization__form-label"
+            >Client ID</label
+          >
+          <input
+            type="text"
+            class="authorization__form-control"
+            id="clientId"
+            placeholder=""
+          />
+        </div>
+        <div class="authorization__tockenSection--secretId">
+          <label for="clientSecret" class="authorization__form-label">Client secret</label>
+          <input
+          type="text"
+          class="authorization__form-control"
+          id="clientSecret"
+          placeholder=""
+        />
+        <input type="button" class="authorization__btn" onclick="requestAuthorization()" value="Request Authorization">
+        </div>
+        
+      
+    </div>
+  </body>
+</html>

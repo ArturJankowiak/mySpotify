@@ -1,6 +1,8 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -8,51 +10,63 @@ module.exports = {
     main: "./src/index.js",
   },
   output: {
-    filename: "js/[name]-bundle.js",
+    filename: "js/[name]-[contenthash].js",
     path: path.resolve(__dirname, "../", "build"),
   },
-  // devServer: {
-  //   open: true,
-  //   inline: false,
-  //   contentBase: path.resolve(__dirname, "../", "public"),
-  //   port: 5001,
-  // },
   module: {
     rules: [
       {
         test: /\.txt$/,
         use: "raw-loader",
       },
-      // {
-      //   test: /\.css$/,
-      //   use: ["style-loader", "css-loader"],
-      // },
-      // {
-      //   test: /\.(sass|scss)$/,
-      //   use: ["style-loader", "css-loader", "sass-loader"],
-      // },
-      // {
-      //   test: /\.(jpg|png|svg|jpeg|gif)$/,
-      //   use: "file-loader",
-      // },
-      // {
-      //   test: /\.jsx?$/,
-      //   exclude: /node_modules/,
-      //   loader: "babel-loader",
-      //   options: {
-      //     presets: [
-      //       ["@babel/preset-env", { useBuiltIns: "usage", corejs: "2.0.0" }],
-      //     ],
-      //     plugins: ["@babel/plugin-proposal-class-properties"],
-      //   },
-      // },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(jpg|png|svg|jpeg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name][contenthash:6].[ext]",
+              outputPath: "images",
+            },
+          },
+          {
+            loader: "image-webpack-loader",
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 70,
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          // eslint options (if necessary)
+        },
+      },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: "src/templates/template.html",
-    //   title: "nowa aplikacja",
-    // }),
+    new HtmlWebpackPlugin({
+      template: "src/templates/template.html",
+      title: "nowa aplikacja",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name]-[contenthash].css",
+    }),
+    new ESLintPlugin(),
   ],
 };
