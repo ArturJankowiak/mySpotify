@@ -1,11 +1,18 @@
-import { message, messageDOM } from "./utils/messege";
-import "./components/footer";
 import "./sass/index.scss";
-import addImage from "./utils/add-image";
-import { requestAuthorization } from "./utils/authorization";
+import { APIController } from "./utils/apiController";
 
-message("it works");
-messageDOM("działaaa");
+const apiController = new APIController();
 
-addImage("h1");
-requestAuthorization();
+apiController._getToken();
+
+const searchBtn = document.getElementById("searchBtn");
+const searchInput = document.getElementById("searchInput");
+
+searchBtn.addEventListener("click", () => {
+  if (searchInput.value !== "") {
+    apiController.searchAlbum(searchInput.value);
+    searchInput.value = "";
+  } else {
+    alert("!!!");
+  }
+});

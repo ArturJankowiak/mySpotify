@@ -1,2 +1,5 @@
-@import "./page";
-@import "../components/footer";
+@import "./abstracts/variables";
+@import "./base/paragraph";
+@import "./base/input";
+// @import "./components/";
+@import "./themes/global";
