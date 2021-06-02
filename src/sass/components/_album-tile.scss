@@ -12,13 +12,12 @@
   display: flex;
   height: 300px;
   width: 260px;
-  // padding: 0 20px 8px;
   justify-content: center;
   align-items: flex-end;
   overflow: hidden;
   border: 3px solid black;
   margin: 30px 30px;
-  // padding-left: 15px;
+  background: center center no-repeat;
 
   background-color: rgb(243, 199, 199);
 
@@ -39,7 +38,7 @@
   background: linear-gradient(
     0deg,
     rgba(255, 255, 255, 1) 20%,
-    rgba(255, 255, 255, 1) 35%,
+    rgba(255, 255, 255, 1) 55%,
     rgba(255, 255, 255, 0) 100%
   );
 }

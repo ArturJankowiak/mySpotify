@@ -1,7 +1,10 @@
 .popup {
-  position: absolute;
-  bottom: 15%;
-  right: 5%;
+  position: fixed;
+  top: 50%;
+  right: 10vw;
+  transform: translateY(-50%);
+  width: 100%;
+  max-width: 350px;
 }
 
 .popup__container {
@@ -43,20 +46,26 @@
   border-radius: 15px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
   text-align: center;
-  position: relative;
   height: auto;
-  top: 60px;
   overflow: hidden;
 }
 
 .popup__album-details {
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
+  max-height: 235px;
   width: 320px;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.close {
+.closePopup {
   position: absolute;
   right: 5%;
   cursor: pointer;
@@ -95,7 +104,6 @@
 }
 
 .textarea {
-  height: 35px;
   width: 100%;
   margin-top: 20px;
   padding: 10px;

@@ -25,38 +25,36 @@ function onPageLoad() {}
 // }
 
 export class APIController {
-  constructor() {
-    this.imgEl = document.querySelector(".featured-album__image img");
-  }
-
   clientId = "770481c017984602a1c058800815e26d";
   redirect_url = "http://localhost:5005/webpack-dev-server/";
   clientSecret = client_secret;
   token = "";
   tokenType = "";
   headers = {};
+  activePlaylistId = "";
 
   authorize() {
     const token = this._checkTokenExsist();
     if (!token || token === "null" || token === "false") {
       window.open(
-        `https://accounts.spotify.com/authorize?response_type=code&client_id=${this.clientId}&redirect_uri=${this.redirect_url}`
+        `https://accounts.spotify.com/authorize?scope=playlist-read-private,playlist-modify-public,playlist-modify-private&response_type=token&client_id=${this.clientId}&redirect_uri=${this.redirect_url}`
       );
-      sessionStorage.setItem(
-        "token",
-        new URLSearchParams(window.location.search).get("code")
-      );
+      sessionStorage.setItem("token", this._getAccesTokenFromURL());
     } else {
       sessionStorage.setItem("token", token);
     }
 
     this.token = token;
+    this.headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    this.init();
     return true;
   }
 
   _checkTokenExsist() {
     const sessionToken = sessionStorage.getItem("token");
-    const urlToken = new URLSearchParams(window.location.search).get("code");
+    const urlToken = this._getAccesTokenFromURL();
 
     if (sessionToken) {
       return sessionToken;
@@ -67,46 +65,195 @@ export class APIController {
     }
   }
 
-  _getToken = async () => {
-    const result = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + btoa(this.clientId + ":" + client_secret),
-      },
-      body: "grant_type=client_credentials",
-    });
+  // Funkcja wyciaga token z adresu
 
-    const data = await result.json();
-    this.token = data.access_token;
-    this.tokenType = data.token_type;
-    this.headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `${this.tokenType} ${this.token}`,
-    };
-  };
+  _getAccesTokenFromURL() {
+    const hash = window.location.hash.substring(1);
+    const accessString = hash.indexOf("&");
+    return hash.substring(13, accessString);
+  }
 
-  searchAlbum(album) {
+  searchAlbum(album, albumsWrapper, albumsDetailsButtons) {
     const query = { q: album, type: "album" };
     fetch(getUrl(apiRoutes.search, query), {
       method: "GET",
       headers: this.headers,
-    }).then((response) => response.json());
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const {
+          albums: { items },
+        } = response;
+        albumsWrapper.innerHTML = "";
+
+        items.forEach((album) => {
+          const albumWrap = document.createElement("div");
+          albumWrap.classList.add("album-tile__wrapper");
+          albumWrap.innerHTML = `
+          <div class="album-tile__wrapper--box">
+            <div class="album-tile__wrapper--img">
+              <div class="featured-album" style="background-image: url('${album.images[0].url}')">
+                <div class="featured-album__description">
+                  <p class="description">
+                    Artist - <span class="description__info">${album.artists[0].name}</span>
+                  </p>
+                  <p class="description">
+                    Album name -
+                    <span class="description__info">${album.name}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="featured-album__description--summary">
+            <p class="summary">
+              Album type -
+              <span class="summary_info">${album.album_type}</span>
+            </p>
+            <p class="summary">
+              Relaese date - <span class="summary_info">${album.release_date}</span>
+            </p>
+            <p class="summary">
+              Total tracks - <span class="summary_info">${album.total_tracks}</span>
+            </p>
+          </div>
+          <div class="albums-container__btn">
+            <a href="#" data-album-id="${album.id}" class="albumDetailsBtn">
+              Get track list
+            </a>
+          </div>`;
+          albumsWrapper.appendChild(albumWrap);
+        });
+      })
+      .then(() => {
+        albumsDetailsButtons = document.querySelectorAll(".albumDetailsBtn");
+        albumsDetailsButtons.forEach((albumBtn) => {
+          albumBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.getSingleAlbum(albumBtn.getAttribute("data-album-id"));
+          });
+        });
+      });
   }
 
   getSingleAlbum(albumId) {
-    fetch(getUrl(apiRoutes.album, { id: albumId }), {
+    fetch(getUrl(apiRoutes.album.replace("{id}", albumId), null), {
       method: "GET",
       headers: this.headers,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((album) => {
+        this.closePopup();
+        const albumPopup = document.createElement("div");
+        albumPopup.classList.add("popup");
+        let albumPopupHTML = `<div class="popup__container">
+        <div class="popup__container--area" id="popup">
+          <a href="#" class="closePopup" id="closePopup">X</a>
+          <div class="avatar" style="background-image: url('${album.images[0].url}')"></div>
+          <p class="popup__album-name">${album.name}</p>
+          <div class="dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <ul class="popup__album-details">`;
+
+        album.tracks.items.forEach(
+          (track) =>
+            (albumPopupHTML += `<li class="textarea">${track.name} <a href="#" class="add-track-btn" data-track-uri="${track.uri}">Add</a></li>`)
+        );
+
+        albumPopupHTML += `</ul>
+        </div>
+        <div class="popup-btn" onclick="open()"></div>
+      </div>`;
+
+        albumPopup.innerHTML = albumPopupHTML;
+        document.body.appendChild(albumPopup);
+      })
+      .then(() => {
+        const addTrackBtns = document.querySelectorAll(".add-track-btn");
+        addTrackBtns.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (this.activePlaylistId && this.activePlaylistId !== "") {
+              const albumURI = btn.getAttribute("data-track-uri");
+              this.addAlbumsToPlaylist(albumURI);
+            } else {
+              alert("Wybierz playliste!");
+            }
+          });
+        });
+        const closePopup = document.getElementById("closePopup");
+        closePopup.addEventListener("click", this.closePopup);
+      });
+  }
+
+  getPlaylists() {
+    fetch(getUrl(apiRoutes.playlists), {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + this.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const playlistWrapper = document.getElementById("playlist-wrapper");
+        let playlistsHTML = "";
+        response.items.forEach((playlist) => {
+          playlistsHTML += `<li class="playlist__wrapper--item">
+          <a href="#" data-playlist-id="${playlist.id}" class="playlist">${playlist.name}</a>
+        </li>`;
+        });
+
+        playlistWrapper.innerHTML = playlistsHTML;
+      })
+      .then(() => {
+        this.markPlaylist();
+      });
+  }
+
+  markPlaylist() {
+    const allPlaylists = document.querySelectorAll(".playlist");
+    allPlaylists.forEach((playlist) => {
+      playlist.addEventListener("click", (e) => {
+        e.preventDefault();
+        allPlaylists.forEach((pl) =>
+          pl.parentNode.classList.remove("playlist__wrapper--item--active")
+        );
+        playlist.parentNode.classList.add("playlist__wrapper--item--active");
+        this.activePlaylistId = playlist.getAttribute("data-playlist-id");
+      });
+    });
+  }
+
+  addAlbumsToPlaylist(albumsURI) {
+    fetch(
+      getUrl(
+        apiRoutes.addPlaylist.replace("{playlist_id}", this.activePlaylistId),
+        { uris: albumsURI }
+      ),
+      {
+        method: "POST",
+        headers: this.headers,
+      }
+    )
+      .then(() => alert("Piosenka została dodana"))
+      .catch((err) => alert(error));
   }
 
   init() {
-    this.searchAlbum().then((data) =>
-      this.imgEl.setAttribute("src", data.image[0].url)
-    );
+    this.getPlaylists();
+  }
+
+  closePopup(e) {
+    if (e) {
+      e.preventDefault();
+    }
+    const currentPopup = document.querySelector(".popup");
+    if (currentPopup) {
+      currentPopup.remove();
+    }
   }
 }
 

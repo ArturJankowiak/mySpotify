@@ -11,14 +11,14 @@ dom.watch();
 
 const apiController = new APIController();
 
-apiController._getToken();
-
 const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
 const playlistBtn = document.getElementById("playlistBtn");
 const loginBtn = document.getElementById("login-button");
 
 const loginWrapper = document.getElementById("login-wrapper");
+const albumsWrapper = document.getElementById("albums-grid-wrapper");
+const albumDetailsButtons = [];
 
 loginBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -29,7 +29,11 @@ loginBtn.addEventListener("click", (e) => {
 
 searchBtn.addEventListener("click", () => {
   if (searchInput.value !== "") {
-    apiController.searchAlbum(searchInput.value);
+    apiController.searchAlbum(
+      searchInput.value,
+      albumsWrapper,
+      albumDetailsButtons
+    );
     searchInput.value = "";
   } else {
     alert("!!!");
