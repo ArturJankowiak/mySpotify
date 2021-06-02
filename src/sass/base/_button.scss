@@ -1,0 +1,25 @@
+.playlistBtn,
+.albumDetailsBtn {
+  font-family: $font-family;
+  height: 40px;
+  width: 160px;
+  border-radius: 3px;
+  background-color: $secondary-color;
+  color: #fff;
+  box-shadow: 0 2px 3px 0 rgba(16, 108, 202, 0.2);
+  font-weight: 700;
+  letter-spacing: 0.75px;
+  line-height: 13px;
+  text-align: center;
+  border: none;
+}
+
+.playlistBtn,
+.albumDetailsBtn:hover {
+  background-color: #0d58a6;
+  box-shadow: 0 2px 3px 0 rgba(13, 88, 166, 0.5);
+}
+
+.albumDetailsBtn {
+  transform: translateX(50%);
+}

@@ -1,0 +1,122 @@
+.popup {
+  position: absolute;
+  bottom: 15%;
+  right: 5%;
+}
+
+.popup__container {
+  position: relative;
+  height: 510px;
+}
+
+.popup-btn {
+  background-color: #106cca;
+  color: white;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 35px;
+  padding: 15px;
+  cursor: pointer;
+  justify-self: flex-end;
+  position: absolute;
+  right: 0px;
+  bottom: -125px;
+  margin-top: 0px;
+  transition-delay: 0;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.msg-btn:hover {
+  transform: scale(1.1);
+}
+
+.popup__container--area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f77308;
+  padding: 20px 20px 25px 20px;
+  border-radius: 15px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  position: relative;
+  height: auto;
+  top: 60px;
+  overflow: hidden;
+}
+
+.popup__album-details {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 320px;
+}
+
+.close {
+  position: absolute;
+  right: 5%;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  font-size: 27px;
+}
+
+.avatar {
+  background-image: url("");
+  height: 180px;
+  width: 180px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  padding: 10px;
+  border: 4px solid white;
+  margin-top: 20px;
+}
+
+.popup__album-name {
+  margin: 10px 0px;
+  font-size: 28px;
+  color: #ececec;
+  font-weight: lighter;
+}
+
+.dot {
+  height: 7px;
+  width: 7px;
+  background-color: #ececec;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 1px;
+}
+
+.textarea {
+  height: 35px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  outline: none;
+  background-color: #ececec;
+  border-radius: 3%;
+}
+
+// .send-btn {
+//   padding: 10px;
+//   background-color: rgb(52, 156, 204);
+//   color: rgb(41, 30, 39);
+//   border: none;
+//   outline: none;
+//   font-weight: 700;
+//   margin-top: 15px;
+//   cursor: pointer;
+//   transition: 0, 5s;
+// }
+
+// .send-btn:hover {
+//   background-color: #fff;
+//   box-shadow: rgba(0, 0, 0, 0.2);
+// }

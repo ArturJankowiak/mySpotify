@@ -1,0 +1,18 @@
+.search-wrapper__alert {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  height: 30px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 7px;
+
+  .alertInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $font-family;
+    color: $main-text-color;
+  }
+}

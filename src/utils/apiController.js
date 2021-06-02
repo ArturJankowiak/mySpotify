@@ -26,6 +26,10 @@ function onPageLoad() {}
 // }
 
 export class APIController {
+  constructor() {
+    this.imgEl = document.querySelector(".featured-album__image img");
+  }
+
   clientId = client_id;
   clientSecret = client_secret;
   token = "";
@@ -52,16 +56,29 @@ export class APIController {
   };
 
   searchAlbum(album) {
-    // s.albums
     const query = { q: album, type: "album" };
     fetch(getUrl(apiRoutes.search, query), {
       method: "GET",
       headers: this.headers,
+    }).then((response) => response.json());
+  }
+
+  getSingleAlbum(albumId) {
+    fetch(getUrl(apiRoutes.album, { id: albumId }), {
+      method: "GET",
+      headers: this.headers,
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => console.log(data));
   }
 
-  // getAlbum(id)
-  //
+  init() {
+    this.searchAlbum().then((data) =>
+      this.imgEl.setAttribute("src", data.image[0].url)
+    );
+  }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  new APIController();
+});

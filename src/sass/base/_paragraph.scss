@@ -1,0 +1,19 @@
+.summary,
+.description {
+  color: $description-text-color;
+  font-family: $font-family;
+}
+
+.summary_info,
+.description__info {
+  color: $main-text-color;
+  font-weight: 700;
+  font-family: $font-family;
+}
+
+.summary,
+.summary_info,
+.description,
+.description__info {
+  font-size: $description-font-size;
+}

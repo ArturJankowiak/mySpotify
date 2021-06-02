@@ -1,5 +1,11 @@
 @import "./abstracts/variables";
 @import "./base/paragraph";
-@import "./base/input";
-// @import "./components/";
 @import "./themes/global";
+@import "./base/button";
+@import "./components/main-grid-view";
+@import "./components/album-tile";
+@import "./components/search-input";
+@import "./components/details-popup";
+@import "./components/alert";
+@import "./components/playlist";
+@import "./components/footer";
