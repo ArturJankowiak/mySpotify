@@ -4,6 +4,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
+// import { library, dom, config } from "@fortawesome/fontawesome-svg-core";
+// import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
+
 module.exports = {
   mode: "production",
   entry: {

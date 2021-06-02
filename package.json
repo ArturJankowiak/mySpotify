@@ -20,6 +20,7 @@
   "author": "Artur Jankowiak",
   "license": "ISC",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^5.2.6",
     "eslint": "^7.27.0",
@@ -38,7 +39,6 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
     "font-awesome-webpack": "^0.0.5-beta.2"
   }
 }
