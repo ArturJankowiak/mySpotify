@@ -2,7 +2,6 @@ import { apiRoutes } from "./apiRoutes";
 import { getUrl } from "./apiHelper";
 
 let redirect_url = "http://localhost:5005/webpack-dev-server/";
-let client_id = "770481c017984602a1c058800815e26d";
 let client_secret = "b588ccfd3bf8413d891dd94cdcd91d0b";
 
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
@@ -30,18 +29,50 @@ export class APIController {
     this.imgEl = document.querySelector(".featured-album__image img");
   }
 
-  clientId = client_id;
+  clientId = "770481c017984602a1c058800815e26d";
+  redirect_url = "http://localhost:5005/webpack-dev-server/";
   clientSecret = client_secret;
   token = "";
   tokenType = "";
   headers = {};
+
+  authorize() {
+    const token = this._checkTokenExsist();
+    if (!token || token === "null" || token === "false") {
+      window.open(
+        `https://accounts.spotify.com/authorize?response_type=code&client_id=${this.clientId}&redirect_uri=${this.redirect_url}`
+      );
+      sessionStorage.setItem(
+        "token",
+        new URLSearchParams(window.location.search).get("code")
+      );
+    } else {
+      sessionStorage.setItem("token", token);
+    }
+
+    this.token = token;
+    return true;
+  }
+
+  _checkTokenExsist() {
+    const sessionToken = sessionStorage.getItem("token");
+    const urlToken = new URLSearchParams(window.location.search).get("code");
+
+    if (sessionToken) {
+      return sessionToken;
+    } else if (urlToken) {
+      return urlToken;
+    } else {
+      return false;
+    }
+  }
 
   _getToken = async () => {
     const result = await fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + btoa(client_id + ":" + client_secret),
+        Authorization: "Basic " + btoa(this.clientId + ":" + client_secret),
       },
       body: "grant_type=client_credentials",
     });

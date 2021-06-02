@@ -35,6 +35,13 @@ module.exports = {
         test: /\.(jpg|png|svg|jpeg|gif)$/,
         use: "file-loader",
       },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        loader: "file-loader",
+        options: {
+          outputPath: "../fonts",
+        },
+      },
     ],
   },
   plugins: [
