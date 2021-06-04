@@ -112,19 +112,12 @@
   border-radius: 3%;
 }
 
-// .send-btn {
-//   padding: 10px;
-//   background-color: rgb(52, 156, 204);
-//   color: rgb(41, 30, 39);
-//   border: none;
-//   outline: none;
-//   font-weight: 700;
-//   margin-top: 15px;
-//   cursor: pointer;
-//   transition: 0, 5s;
-// }
-
-// .send-btn:hover {
-//   background-color: #fff;
-//   box-shadow: rgba(0, 0, 0, 0.2);
-// }
+.add-track-btn {
+  font-family: $font-family;
+  font-size: 12px;
+  text-decoration: none;
+  color: white;
+  background: $primary-color;
+  cursor: pointer;
+  padding: 4px 9px 4px 9px;
+}

@@ -4,7 +4,7 @@
   min-width: 200px;
   height: 70vh;
   max-height: 70vh;
-  background-color: goldenrod;
+  background-color: rgb(148, 143, 132);
   padding: 20px 0;
   list-style: none;
   border-radius: 15px;
@@ -12,10 +12,15 @@
   &--item {
     margin-bottom: 10px;
     padding: 0 20px;
+    color: white;
     &--active {
       background-color: gray;
     }
     .playlist {
+      color: white;
+      text-decoration: none;
+      font-family: $font-family;
+      font-size: 16px;
       text-decoration: none;
       &--active {
         background-color: red;

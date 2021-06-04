@@ -15,6 +15,7 @@ const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
 const playlistBtn = document.getElementById("playlistBtn");
 const loginBtn = document.getElementById("login-button");
+const alertInfo = document.querySelector(".alertInfo");
 
 const loginWrapper = document.getElementById("login-wrapper");
 const albumsWrapper = document.getElementById("albums-grid-wrapper");
@@ -36,6 +37,6 @@ searchBtn.addEventListener("click", () => {
     );
     searchInput.value = "";
   } else {
-    alert("!!!");
+    alertInfo.innerText = "Music content is empty.";
   }
 });
