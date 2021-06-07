@@ -61,6 +61,7 @@ export class APIController {
       headers: this.headers,
     })
       .then((response) => response.json())
+
       .then((response) => {
         const {
           albums: { items },
@@ -219,7 +220,7 @@ export class APIController {
         headers: this.headers,
       }
     )
-      .then(() => alert("This song is already added."))
+      .then(() => alert("This song is added to the playlist."))
       .catch((err) => alert(error));
   }
 

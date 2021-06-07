@@ -4,4 +4,5 @@ export const apiRoutes = {
   album: "albums/{id}",
   playlists: "me/playlists",
   addPlaylist: "playlists/{playlist_id}/tracks",
+  pagination: "offset=20&limit=20",
 };
