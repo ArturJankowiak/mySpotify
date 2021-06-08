@@ -15,6 +15,7 @@ export class APIController {
   tokenType = "";
   headers = {};
   activePlaylistId = "";
+  currentAlbum = "";
 
   authorize() {
     const token = this._checkTokenExsist();
@@ -54,9 +55,11 @@ export class APIController {
     return hash.substring(13, accessString);
   }
 
-  searchAlbum(album, albumsWrapper, albumsDetailsButtons) {
+  searchAlbum(album, albumsWrapper, albumsDetailsButtons, page = 1) {
+    this.currentAlbum = album;
     const query = { q: album, type: "album" };
-    fetch(getUrl(apiRoutes.search, query), {
+    const filters = { page: page, limit: 20 };
+    fetch(getUrl(apiRoutes.search, query, filters), {
       method: "GET",
       headers: this.headers,
     })
@@ -66,6 +69,7 @@ export class APIController {
         const {
           albums: { items },
         } = response;
+        console.log(response);
         albumsWrapper.innerHTML = "";
 
         items.forEach((album) => {

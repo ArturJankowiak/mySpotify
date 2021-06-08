@@ -5,7 +5,6 @@ import {
   dom,
 } from "../node_modules/@fortawesome/fontawesome-svg-core";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
-import { pagination } from "./utils/pagination";
 
 library.add(faCheck);
 dom.watch();
@@ -20,8 +19,6 @@ const alertInfo = document.querySelector(".alertInfo");
 const loginWrapper = document.getElementById("login-wrapper");
 const albumsWrapper = document.getElementById("albums-grid-wrapper");
 const albumDetailsButtons = [];
-
-// searchInputByEnter = document.addEventListener("keyup", checkEnter);
 
 loginBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -43,12 +40,6 @@ searchBtn.addEventListener("click", () => {
     alertInfo.innerText = "Music content is empty.";
   }
 });
-
-const checkEnter = () => {
-  if (event.keyCode === 13) {
-    searchAlbum();
-  }
-};
 
 const list_items = [
   "Item 1",
@@ -115,6 +106,13 @@ function PaginaionButton(page, items) {
   }
   button.addEventListener("click", () => {
     current_page = page;
+    apiController.searchAlbum(
+      apiController.currentAlbum,
+      albumsWrapper,
+      albumDetailsButtons,
+      page
+    );
+
     displayList(items, list_element, rows, current_page);
 
     let current_btn = document.querySelector(".pagenumbers button.active");
