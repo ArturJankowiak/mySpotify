@@ -17,6 +17,14 @@ export class APIController {
   activePlaylistId = "";
   currentAlbum = "";
 
+  constructor() {
+    this.prepareEvents();
+  }
+
+  prepareEvents() {
+    const _self = this;
+  }
+
   authorize() {
     const token = this._checkTokenExsist();
     if (!token || token === "null" || token === "false") {
@@ -69,7 +77,7 @@ export class APIController {
         const {
           albums: { items },
         } = response;
-        console.log(response);
+        // console.log(response);
         albumsWrapper.innerHTML = "";
 
         items.forEach((album) => {
@@ -92,15 +100,15 @@ export class APIController {
             </div>
           </div>
           <div class="featured-album__description--summary">
-            <p class="summary">
-              Album type -
-              <span class="summary_info">${album.album_type}</span>
+            <p class="summary__top">
+              Album type 
+              <span class="summary_info--type">${album.album_type}</span>
             </p>
             <p class="summary">
-              Relaese date - <span class="summary_info">${album.release_date}</span>
+              Relaese date <span class="summary_info--date">${album.release_date}</span>
             </p>
-            <p class="summary">
-              Total tracks - <span class="summary_info">${album.total_tracks}</span>
+            <p class="summary__info">
+              Total tracks  <span class="summary_info--tracks">${album.total_tracks}</span><span class="summary_info--crossed">${album.total_tracks}</span>
             </p>
           </div>
           <div class="albums-container__btn">
@@ -184,11 +192,15 @@ export class APIController {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log(response);
         const playlistWrapper = document.getElementById("playlist-wrapper");
         let playlistsHTML = "";
         response.items.forEach((playlist) => {
           playlistsHTML += `<li class="playlist__wrapper--item">
           <a href="#" data-playlist-id="${playlist.id}" class="playlist">${playlist.name}</a>
+          <div class="accordian-content">
+          <p class="track-list">lista utworów</p>
+              </div>
         </li>`;
         });
 
@@ -196,6 +208,7 @@ export class APIController {
       })
       .then(() => {
         this.markPlaylist();
+        // this.getPlaylistItems(allPlaylistElement);
       });
   }
 
@@ -225,11 +238,38 @@ export class APIController {
       }
     )
       .then(() => alert("This song is added to the playlist."))
-      .catch((err) => alert(error));
+      .catch((err) => alert(err));
+  }
+
+  getPlaylistItems(allPlaylistElement) {
+    allPlaylistElement.forEach((element) => {
+      element.addEventListener("click", (e) => {
+        e.preventDefault();
+        fetch(
+          getUrl(apiRoutes.playlistItems.replace("{playlist_id}", id), {
+            method: "GET",
+            headers: this.headers,
+          })
+            .then((respo) => respo.json())
+            .then((tracks) => {
+              console.log("tracks", tracks);
+            })
+        );
+        allPlaylistElement.forEach((singleEl) => {
+          singleEl.classList.add("playlist--collapse"); //parentnode
+
+          const activePlayList = document.querySelector(".playlist--collapse");
+          activePlayList.forEach((activEl) => {
+            activEl.classList.add("playlist--collapse--active");
+          });
+        });
+      });
+    });
   }
 
   init() {
     this.getPlaylists();
+    // this.getPlaylistItems(allPlaylistElement);
   }
 
   closePopup(e) {

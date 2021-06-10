@@ -19,6 +19,8 @@ const alertInfo = document.querySelector(".alertInfo");
 const loginWrapper = document.getElementById("login-wrapper");
 const albumsWrapper = document.getElementById("albums-grid-wrapper");
 const albumDetailsButtons = [];
+// const allPlaylistElement = document.querySelectorAll(".playlist");
+// const allPlaylistElement = HTMLCollection.querySelectorAll("a.playlist");
 
 loginBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -40,6 +42,10 @@ searchBtn.addEventListener("click", () => {
     alertInfo.innerText = "Music content is empty.";
   }
 });
+
+// allPlaylistElement.addEventListener("click", () => {
+//   apiController.getPlaylistItems(allPlaylistElement);
+// });
 
 const list_items = [
   "Item 1",
