@@ -20,7 +20,8 @@ const loginWrapper = document.getElementById("login-wrapper");
 const albumsWrapper = document.getElementById("albums-grid-wrapper");
 const albumDetailsButtons = [];
 // const allPlaylistElement = document.querySelectorAll(".playlist");
-// const allPlaylistElement = HTMLCollection.querySelectorAll("a.playlist");
+const allPlaylistElement = document.querySelectorAll(".playlist");
+// console.log(allPlaylistElement);
 
 loginBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -132,3 +133,4 @@ function PaginaionButton(page, items) {
 
 displayList(list_items, list_element, rows, current_page);
 setupPagination(list_items, pagination_element, rows);
+console.log(allPlaylistElement);

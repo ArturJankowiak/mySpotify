@@ -208,7 +208,17 @@ export class APIController {
       })
       .then(() => {
         this.markPlaylist();
-        // this.getPlaylistItems(allPlaylistElement);
+        const allPlaylistElement = document.querySelectorAll(".playlist");
+        console.log(allPlaylistElement);
+        allPlaylistElement.forEach((trackList) => {
+          trackList.addEventListener("click", (event) => {
+            const playlistId = event.target.getAttribute("data-playlist-id");
+
+            console.log(event);
+            this.getPlaylistItems(playlistId);
+          });
+          console.log("trackList", trackList);
+        });
       });
   }
 
@@ -241,35 +251,27 @@ export class APIController {
       .catch((err) => alert(err));
   }
 
-  getPlaylistItems(allPlaylistElement) {
-    allPlaylistElement.forEach((element) => {
-      element.addEventListener("click", (e) => {
-        e.preventDefault();
-        fetch(
-          getUrl(apiRoutes.playlistItems.replace("{playlist_id}", id), {
-            method: "GET",
-            headers: this.headers,
-          })
-            .then((respo) => respo.json())
-            .then((tracks) => {
-              console.log("tracks", tracks);
-            })
-        );
-        allPlaylistElement.forEach((singleEl) => {
-          singleEl.classList.add("playlist--collapse"); //parentnode
-
-          const activePlayList = document.querySelector(".playlist--collapse");
-          activePlayList.forEach((activEl) => {
-            activEl.classList.add("playlist--collapse--active");
-          });
-        });
+  getPlaylistItems(id) {
+    fetch(getUrl(apiRoutes.playlistItems.replace("{playlist_id}", id)), {
+      method: "GET",
+      headers: this.headers,
+    })
+      .then((respo) => respo.json())
+      .then((tracks) => {
+        console.log("tracks", tracks);
       });
-    });
+    // allPlaylistElement.forEach((singleEl) => {
+    //   singleEl.classList.add("playlist--collapse"); //parentnode
+
+    //   const activePlayList = document.querySelector(".playlist--collapse");
+    //   activePlayList.forEach((activEl) => {
+    //     activEl.classList.add("playlist--collapse--active");
+    //   });
+    // });
   }
 
   init() {
     this.getPlaylists();
-    // this.getPlaylistItems(allPlaylistElement);
   }
 
   closePopup(e) {
