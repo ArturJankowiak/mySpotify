@@ -1,11 +1,15 @@
 import { apiRoutes } from "./apiRoutes";
 import { getUrl } from "./apiHelper";
+import { singleAlbumTemplate } from "../templates/singleAlbum.txt";
 
 let redirect_url = "http://localhost:5005/webpack-dev-server/";
 let client_secret = "b588ccfd3bf8413d891dd94cdcd91d0b";
 
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token";
+
+const loginBtn = document.getElementById("login-button");
+const loginWrapper = document.getElementById("login-wrapper");
 
 export class APIController {
   clientId = "770481c017984602a1c058800815e26d";
@@ -23,6 +27,12 @@ export class APIController {
 
   prepareEvents() {
     const _self = this;
+    loginBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (_self.authorize()) {
+        loginWrapper.classList.remove("login__wrapper--show");
+      }
+    });
   }
 
   authorize() {
@@ -140,21 +150,24 @@ export class APIController {
         this.closePopup();
         const albumPopup = document.createElement("div");
         albumPopup.classList.add("popup");
-        let albumPopupHTML = `<div class="popup__container">
-        <div class="popup__container--area" id="popup">
-          <a href="#" class="closePopup" id="closePopup">X</a>
-          <div class="avatar" style="background-image: url('${album.images[0].url}')"></div>
-          <p class="popup__album-name">${album.name}</p>
-          <div class="dots">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
-          <ul class="popup__album-details">`;
+        const singleAlbum = Handlebars.compile(singleAlbumTemplate);
+        // let albumPopupHTML = `   <div class="popup__container">
+        // <div class="popup__container--area" id="popup">
+        //   <a href="#" class="closePopup" id="closePopup">X</a>
+        //   <div class="avatar" style="background-image: url('${album.images[0].url}')"></div>
+        //   <p class="popup__album-name">${album.name}</p>
+        //   <div class="dots">
+        //     <span class="dot"></span>
+        //     <span class="dot"></span>
+        //     <span class="dot"></span>
+        //   </div>
+        //   <ul class="popup__album-details">`;
 
         album.tracks.items.forEach(
           (track) =>
-            (albumPopupHTML += `<li class="textarea">${track.name} <a href="#" class="add-track-btn" data-track-uri="${track.uri}">Add</a></li>`)
+            singleAlbum({
+              track: track,
+            })`<li class="textarea">${track.name} <a href="#" class="add-track-btn" data-track-uri="${track.uri}">Add</a></li>`
         );
 
         albumPopupHTML += `</ul>
@@ -162,7 +175,7 @@ export class APIController {
         
       </div>`;
 
-        albumPopup.innerHTML = albumPopupHTML;
+        albumPopup.innerHTML = singleAlbum;
         document.body.appendChild(albumPopup);
       })
       .then(() => {
@@ -198,9 +211,12 @@ export class APIController {
         response.items.forEach((playlist) => {
           playlistsHTML += `<li class="playlist__wrapper--item">
           <a href="#" data-playlist-id="${playlist.id}" class="playlist">${playlist.name}</a>
-          <div class="accordian-content">
-          <p class="track-list">lista utworów</p>
-              </div>
+          <div class="accordian__content" id="accordian-content">
+          <p
+            class="accordian__content-trackList"
+            id="accordian-trackList"
+          ></p>
+        </div>
         </li>`;
         });
 
@@ -209,15 +225,16 @@ export class APIController {
       .then(() => {
         this.markPlaylist();
         const allPlaylistElement = document.querySelectorAll(".playlist");
-        console.log(allPlaylistElement);
+        // console.log(allPlaylistElement);
         allPlaylistElement.forEach((trackList) => {
           trackList.addEventListener("click", (event) => {
+            // event.preventDefault();
             const playlistId = event.target.getAttribute("data-playlist-id");
 
-            console.log(event);
+            // console.log(event);
             this.getPlaylistItems(playlistId);
           });
-          console.log("trackList", trackList);
+          // console.log("trackList", trackList);
         });
       });
   }
@@ -259,7 +276,39 @@ export class APIController {
       .then((respo) => respo.json())
       .then((tracks) => {
         console.log("tracks", tracks);
+        console.log("id", id);
+        const accordianContent = document.querySelector(
+          ".accordian__content-trackList"
+        );
+        let trackListHTML = "";
+        tracks.items.forEach((trackList) => {
+          console.log("trackList---", trackList);
+          trackListHTML += `<div class="accordian__content" id="accordian-content">
+          <p class="accordian__content-trackList" id="accordian-trackList">${trackList.track.name}</p>
+        </div>`;
+        });
+        console.log("accordianContent", accordianContent);
+        accordianContent.innerHTML = trackListHTML;
+      })
+      .then(() => {
+        const allTracksElement = document.querySelectorAll(
+          ".accordian__content-trackList"
+        );
+        console.log("alltracksss", allTracksElement);
+        allTracksElement.forEach((trucks) => {
+          trucks.addEventListener("click", (e) => {});
+        });
       });
+
+    // .then(() => {
+    //   const allTracksElement = document.querySelectorAll(
+    //     ".accordian__content-trackList"
+    //   );
+    //   console.log("allTracksElement", allTracksElement);
+    // });
+
+    // const allTracksElement = document.querySelectorAll('.')
+
     // allPlaylistElement.forEach((singleEl) => {
     //   singleEl.classList.add("playlist--collapse"); //parentnode
 

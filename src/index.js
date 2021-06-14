@@ -11,26 +11,16 @@ dom.watch();
 
 const apiController = new APIController();
 
-const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
-const playlistBtn = document.getElementById("playlistBtn");
-const loginBtn = document.getElementById("login-button");
 const alertInfo = document.querySelector(".alertInfo");
-const loginWrapper = document.getElementById("login-wrapper");
 const albumsWrapper = document.getElementById("albums-grid-wrapper");
 const albumDetailsButtons = [];
-// const allPlaylistElement = document.querySelectorAll(".playlist");
 const allPlaylistElement = document.querySelectorAll(".playlist");
-// console.log(allPlaylistElement);
+const mainForm = document.getElementById("searchForm");
 
-loginBtn.addEventListener("click", (e) => {
+mainForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (apiController.authorize()) {
-    loginWrapper.classList.remove("login__wrapper--show");
-  }
-});
 
-searchBtn.addEventListener("click", () => {
   if (searchInput.value !== "") {
     apiController.searchAlbum(
       searchInput.value,
@@ -43,10 +33,6 @@ searchBtn.addEventListener("click", () => {
     alertInfo.innerText = "Music content is empty.";
   }
 });
-
-// allPlaylistElement.addEventListener("click", () => {
-//   apiController.getPlaylistItems(allPlaylistElement);
-// });
 
 const list_items = [
   "Item 1",

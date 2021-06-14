@@ -1,25 +1,43 @@
 .playlist__container {
+  // zgodnie z invision
   display: block;
   width: 15vw;
   min-width: 304px;
+  border-radius: 3px;
   height: 90vh;
   max-height: 90vh;
-  background-color: rgb(6, 221, 24);
+  background-color: $playlist-bgc-color;
+  border: 1px solid #e0e0e0;
   padding: 20px 0;
   h3 {
+    // Your playlist
     display: inline;
     height: 18px;
-    width: 80px;
+    width: 76px;
+    margin-left: 21px;
     color: #24262b;
     font-family: $font-family;
-    font-size: 16px;
+    font-size: $base-font-size;
     font-weight: 700;
     line-height: 18px;
+  }
+
+  h2 {
+    // SPOTIFY
+    height: 24px;
+    width: 81px;
+    color: #24262b;
+    font-family: $font-family;
+    font-size: 22px;
+    line-height: 25px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 32px;
   }
 }
 
 .playlist__container-header {
-  background-color: red;
+  background-color: $playlist-bgc-color;
 }
 
 .playlist__wrapper {
@@ -28,7 +46,7 @@
   min-width: 180px;
   height: 70vh;
   max-height: 70vh;
-  background-color: rgb(148, 143, 132);
+  background-color: $playlist-bgc-color;
   padding: 20px 0;
   list-style: none;
 
@@ -37,28 +55,27 @@
     padding: 0 20px;
     color: white;
     &--active {
-      background-color: gray;
+      font-weight: 700;
+      color: #f77308;
     }
     .playlist {
-      color: white;
+      color: #212121;
       text-decoration: none;
       font-family: $font-family;
-      font-size: 16px;
+      font-size: 14px;
+      line-height: 22px;
       text-decoration: none;
-      &--active {
-        background-color: red;
-      }
     }
     .playlist::after {
       content: "\25be";
       float: right; // roboczo
-      transform: scale(1.5);
+      transform: scale(1.2);
     }
 
     .playlist--collapse::after {
       content: "\25b4";
       float: right;
-      transform: scale(1.5);
+      transform: scale(1.2);
     }
   }
 }

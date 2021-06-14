@@ -12,10 +12,21 @@
     </div>
     <main class="app">
       <div class="search-wrapper">
-        <div class="search-wrapper__input">
-          <input id="searchInput" class="input" type="text" />
-          <button id="searchBtn" class="searchBtn">Search albums</button>
-        </div>
+        <form id="searchForm" method="GET">
+          <div class="search-wrapper__input">
+            <input
+              id="searchInput"
+              class="input"
+              type="text"
+              name="musicContent"
+              placeholder="Find your favorite album"
+            />
+            <button id="searchBtn" class="searchBtn" type="submit">
+              Search albums
+            </button>
+          </div>
+        </form>
+
         <div class="search-wrapper__alert">
           <p class="alertInfo"></p>
         </div>
@@ -24,15 +35,19 @@
       <section class="main-view">
         <div class="playlist__container">
           <div class="playlist__container-header">
-            <h3>Your Spotify playlists</h3>
+            <h2>Spotify</h2>
+            <h3>Your playlists</h3>
           </div>
 
           <ul class="playlist__wrapper" id="playlist-wrapper">
             <li class="playlist__wrapper--item">
               <a href="#" class="playlist"></a>
-              <!-- <div class="accordian-content">
-                <p>lista utworów</p>
-              </div> -->
+              <div class="accordian__content" id="accordian-content">
+                <p
+                  class="accordian__content-trackList"
+                  id="accordian-trackList"
+                ></p>
+              </div>
             </li>
           </ul>
           <div class="albums-grid-wrapper" id="albums-grid-wrapper"></div>
@@ -43,5 +58,8 @@
         <div class="pagenumbers" id="pagination"></div>
       </div>
     </main>
+    <!-- <script src="./utils/apiController.js"></script>
+    <script src="./index.js"></script> -->
+    <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
   </body>
 </html>
