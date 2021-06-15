@@ -1,6 +1,10 @@
 import { apiRoutes } from "./apiRoutes";
 import { getUrl } from "./apiHelper";
-import { singleAlbumTemplate } from "../templates/singleAlbum.txt";
+// import { singleAlbumTemplate } from "../templates/singleAlbum";
+// import Handlebars from "handlebars";
+
+// const myTemplate = require("../templates/singleAlbum.txt");
+// const template = Handlebars.compile("Name: {{name}}");
 
 let redirect_url = "http://localhost:5005/webpack-dev-server/";
 let client_secret = "b588ccfd3bf8413d891dd94cdcd91d0b";
@@ -87,9 +91,7 @@ export class APIController {
         const {
           albums: { items },
         } = response;
-        // console.log(response);
         albumsWrapper.innerHTML = "";
-
         items.forEach((album) => {
           const albumWrap = document.createElement("div");
           albumWrap.classList.add("album-tile__wrapper");
@@ -98,10 +100,10 @@ export class APIController {
             <div class="album-tile__wrapper--img">
               <div class="featured-album" style="background-image: url('${album.images[0].url}')">
                 <div class="featured-album__description">
-                  <p class="description">
+                  <p class="featured-album__description--text">
                     Artist - <span class="description__info">${album.artists[0].name}</span>
                   </p>
-                  <p class="description">
+                  <p class="featured-album__description--text">
                     Album name -
                     <span class="description__info">${album.name}</span>
                   </p>
@@ -110,22 +112,23 @@ export class APIController {
             </div>
           </div>
           <div class="featured-album__description--summary">
-            <p class="summary__top">
+            <p class="summary">
               Album type 
-              <span class="summary_info--type">${album.album_type}</span>
+              <span class="summary__info--type">${album.album_type}</span>
             </p>
             <p class="summary">
-              Relaese date <span class="summary_info--date">${album.release_date}</span>
+              Relaese date <span class="summary__info--date">${album.release_date}</span>
             </p>
-            <p class="summary__info">
-              Total tracks  <span class="summary_info--tracks">${album.total_tracks}</span><span class="summary_info--crossed">${album.total_tracks}</span>
+            <p class="summary">
+              Total tracks  <span class="summary__info--tracks">${album.total_tracks}</span><span class="summary__info--crossed">${album.total_tracks}</span>
             </p>
           </div>
           <div class="albums-container__btn">
-            <a href="#" data-album-id="${album.id}" class="albumDetailsBtn">
+            <a href="#" data-album-id="${album.id}" class="button albumDetailsBtn">
               Get track list
             </a>
           </div>`;
+
           albumsWrapper.appendChild(albumWrap);
         });
       })
@@ -150,24 +153,22 @@ export class APIController {
         this.closePopup();
         const albumPopup = document.createElement("div");
         albumPopup.classList.add("popup");
-        const singleAlbum = Handlebars.compile(singleAlbumTemplate);
-        // let albumPopupHTML = `   <div class="popup__container">
-        // <div class="popup__container--area" id="popup">
-        //   <a href="#" class="closePopup" id="closePopup">X</a>
-        //   <div class="avatar" style="background-image: url('${album.images[0].url}')"></div>
-        //   <p class="popup__album-name">${album.name}</p>
-        //   <div class="dots">
-        //     <span class="dot"></span>
-        //     <span class="dot"></span>
-        //     <span class="dot"></span>
-        //   </div>
-        //   <ul class="popup__album-details">`;
+        // const singleAlbum = Handlebars.compile(singleAlbumTemplate);
+        let albumPopupHTML = `<div class="popup__container">
+        <div class="popup__area" id="popup">
+          <a href="#" class="popup__close" id="closePopup">X</a>
+          <div class="avatar" style="background-image: url('${album.images[0].url}')"></div>
+          <p class="popup__album-name">${album.name}</p>
+          <div class="dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <ul class="popup__album-details">`;
 
         album.tracks.items.forEach(
           (track) =>
-            singleAlbum({
-              track: track,
-            })`<li class="textarea">${track.name} <a href="#" class="add-track-btn" data-track-uri="${track.uri}">Add</a></li>`
+            (albumPopupHTML += `<li class="textarea">${track.name} <a href="#" class="add-track-btn" data-track-uri="${track.uri}">Add</a></li>`)
         );
 
         albumPopupHTML += `</ul>
@@ -175,7 +176,7 @@ export class APIController {
         
       </div>`;
 
-        albumPopup.innerHTML = singleAlbum;
+        albumPopup.innerHTML = albumPopupHTML;
         document.body.appendChild(albumPopup);
       })
       .then(() => {

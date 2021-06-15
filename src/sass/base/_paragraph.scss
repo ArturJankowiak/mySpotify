@@ -1,10 +1,9 @@
 .summary,
-.description {
+.featured-album__description--text {
   color: $description-text-color;
   font-family: $font-family;
 }
 
-.summary_info,
 .description__info {
   color: $main-text-color;
   font-weight: 700;
@@ -13,7 +12,7 @@
 
 .summary,
 .summary_info,
-.description,
+.featured-album__description--text,
 .description__info {
   font-size: $description-font-size;
 }

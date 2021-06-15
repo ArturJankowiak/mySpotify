@@ -1,28 +1,39 @@
-// .albums-container__btn {
-//   margin-left: auto;
-//   margin-right: auto;
-// }
-
-.playlistBtn,
-.button,
-.albumDetailsBtn {
+.button {
   font-family: $font-family;
-  width: 160px;
   border-radius: 3px;
-  background-color: $secondary-color;
   color: #fff;
-  box-shadow: 0 2px 3px 0 rgba(16, 108, 202, 0.2);
+  font-size: $btn-font-size;
   font-weight: 700;
-  letter-spacing: 0.75px;
-  padding: 15px 0;
+  letter-spacing: 0.88px;
   line-height: 13px;
   text-align: center;
   border: none;
-  display: block;
   text-decoration: none;
 }
 
-.playlistBtn,
+.loginBtn,
+.albumDetailsBtn {
+  width: 160px;
+  background-color: $secondary-color;
+  box-shadow: 0 2px 3px 0 rgba(16, 108, 202, 0.2);
+  padding: 15px 0;
+  display: block;
+}
+
+.searchBtn {
+  height: 50px;
+  width: 232px;
+  margin-left: 10px;
+  margin-top: 15px;
+  background-color: $primary-color;
+  box-shadow: 0 2px 3px 0 rgba(247, 115, 8, 0.2);
+}
+
+.searchBtn:hover {
+  background-color: #e35d08;
+  box-shadow: 0 2px 3px 0 rgba(227, 93, 8, 0.6);
+}
+
 .albumDetailsBtn:hover {
   background-color: #0d58a6;
   box-shadow: 0 2px 3px 0 rgba(13, 88, 166, 0.5);
@@ -30,6 +41,4 @@
 
 .albumDetailsBtn {
   transform: translateX(50%);
-  // margin-left: auto;
-  // margin-right: auto;
 }

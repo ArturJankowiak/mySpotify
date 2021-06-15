@@ -1,6 +1,6 @@
         <div class="popup__container">
-        <div class="popup__container--area" id="popup">
-          <a href="#" class="closePopup" id="closePopup">X</a>
+        <div class="popup__area" id="popup">
+          <a href="#" class="popup__close" id="closePopup">X</a>
           <div class="avatar" style="background-image: url('{{track.url}}')"></div>
           <p class="popup__album-name">${album.name}</p>
           <div class="dots">

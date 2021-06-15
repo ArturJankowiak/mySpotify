@@ -26,9 +26,9 @@
   cursor: pointer;
   justify-self: flex-end;
   position: absolute;
-  right: 0px;
+  right: 0;
   bottom: -125px;
-  margin-top: 0px;
+  margin-top: 0;
   transition-delay: 0;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
 }
@@ -37,7 +37,7 @@
   transform: scale(1.1);
 }
 
-.popup__container--area {
+.popup__area {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,7 +65,7 @@
   }
 }
 
-.closePopup {
+.popup__close {
   position: absolute;
   right: 5%;
   cursor: pointer;
@@ -87,7 +87,7 @@
 }
 
 .popup__album-name {
-  margin: 10px 0px;
+  margin: 10px 0;
   font-size: 28px;
   color: #ececec;
   font-weight: lighter;
