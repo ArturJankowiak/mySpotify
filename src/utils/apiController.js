@@ -112,11 +112,11 @@ export class APIController {
             </div>
           </div>
           <div class="featured-album__description--summary">
-            <p class="summary">
+            <p class="summary summary__top">
               Album type 
               <span class="summary__info--type">${album.album_type}</span>
             </p>
-            <p class="summary">
+            <p class="summary summary__center">
               Relaese date <span class="summary__info--date">${album.release_date}</span>
             </p>
             <p class="summary">
@@ -206,7 +206,6 @@ export class APIController {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         const playlistWrapper = document.getElementById("playlist-wrapper");
         let playlistsHTML = "";
         response.items.forEach((playlist) => {
@@ -226,16 +225,11 @@ export class APIController {
       .then(() => {
         this.markPlaylist();
         const allPlaylistElement = document.querySelectorAll(".playlist");
-        // console.log(allPlaylistElement);
         allPlaylistElement.forEach((trackList) => {
           trackList.addEventListener("click", (event) => {
-            // event.preventDefault();
             const playlistId = event.target.getAttribute("data-playlist-id");
-
-            // console.log(event);
             this.getPlaylistItems(playlistId);
           });
-          // console.log("trackList", trackList);
         });
       });
   }
@@ -276,8 +270,6 @@ export class APIController {
     })
       .then((respo) => respo.json())
       .then((tracks) => {
-        console.log("tracks", tracks);
-        console.log("id", id);
         const accordianContent = document.querySelector(
           ".accordian__content-trackList"
         );

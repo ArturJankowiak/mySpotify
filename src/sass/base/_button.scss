@@ -42,3 +42,10 @@
 .albumDetailsBtn {
   transform: translateX(50%);
 }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 375px) {
+  .searchBtn {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

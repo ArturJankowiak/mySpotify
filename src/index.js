@@ -57,7 +57,7 @@ const list_items = [
   "Item 17",
   "Item 18",
 ];
-
+// const list_items = document.querySelectorAll(".album-tile__wrapper");
 const list_element = document.getElementById("list");
 const pagination_element = document.getElementById("pagination");
 
