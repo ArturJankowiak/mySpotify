@@ -6,12 +6,7 @@ import { getUrl } from "./apiHelper";
 // const myTemplate = require("../templates/singleAlbum.txt");
 // const template = Handlebars.compile("Name: {{name}}");
 
-let redirect_url = "http://localhost:5005/webpack-dev-server/";
 let client_secret = "b588ccfd3bf8413d891dd94cdcd91d0b";
-
-const AUTHORIZE = "https://accounts.spotify.com/authorize";
-const TOKEN = "https://accounts.spotify.com/api/token";
-
 const loginBtn = document.getElementById("login-button");
 const loginWrapper = document.getElementById("login-wrapper");
 
@@ -211,11 +206,7 @@ export class APIController {
         response.items.forEach((playlist) => {
           playlistsHTML += `<li class="playlist__wrapper--item">
           <a href="#" data-playlist-id="${playlist.id}" class="playlist">${playlist.name}</a>
-          <div class="accordian__content" id="accordian-content">
-          <p
-            class="accordian__content-trackList"
-            id="accordian-trackList"
-          ></p>
+          <div class="accordian__content" id="${playlist.id}">
         </div>
         </li>`;
         });
@@ -227,8 +218,26 @@ export class APIController {
         const allPlaylistElement = document.querySelectorAll(".playlist");
         allPlaylistElement.forEach((trackList) => {
           trackList.addEventListener("click", (event) => {
+            allPlaylistElement.forEach((item) =>
+              item.nextElementSibling.classList.remove(
+                "accordian__content-trackList--active"
+              )
+            );
             const playlistId = event.target.getAttribute("data-playlist-id");
-            this.getPlaylistItems(playlistId);
+            const trackListItemsWrap = trackList.nextElementSibling; // rodzeństwo
+            console.log(trackListItemsWrap.childNodes);
+            console.log(trackListItemsWrap.childNodes.length);
+            if (trackListItemsWrap.childNodes.length === 1) {
+              this.getPlaylistItems(playlistId).then(
+                trackListItemsWrap.classList.add(
+                  "accordian__content-trackList--active"
+                )
+              );
+            } else {
+              trackListItemsWrap.classList.toggle(
+                "accordian__content-trackList--active"
+              );
+            }
           });
         });
       });
@@ -264,50 +273,30 @@ export class APIController {
   }
 
   getPlaylistItems(id) {
-    fetch(getUrl(apiRoutes.playlistItems.replace("{playlist_id}", id)), {
+    return fetch(getUrl(apiRoutes.playlistItems.replace("{playlist_id}", id)), {
       method: "GET",
       headers: this.headers,
     })
       .then((respo) => respo.json())
       .then((tracks) => {
-        const accordianContent = document.querySelector(
-          ".accordian__content-trackList"
-        );
-        let trackListHTML = "";
+        const accordianContent = document.getElementById(`${id}`);
+        let trackListHTML = "<ul>";
         tracks.items.forEach((trackList) => {
-          console.log("trackList---", trackList);
-          trackListHTML += `<div class="accordian__content" id="accordian-content">
-          <p class="accordian__content-trackList" id="accordian-trackList">${trackList.track.name}</p>
-        </div>`;
+          trackListHTML += `<li class="accordian__content-trackList" id="accordian-trackList">${trackList.track.name}</li>`;
         });
+        trackListHTML += "</ul>";
         console.log("accordianContent", accordianContent);
         accordianContent.innerHTML = trackListHTML;
-      })
-      .then(() => {
-        const allTracksElement = document.querySelectorAll(
-          ".accordian__content-trackList"
-        );
-        console.log("alltracksss", allTracksElement);
-        allTracksElement.forEach((trucks) => {
-          trucks.addEventListener("click", (e) => {});
-        });
       });
-
     // .then(() => {
-    //   const allTracksElement = document.querySelectorAll(
+    //   const myPlaylist = document.querySelectorAll(
     //     ".accordian__content-trackList"
     //   );
-    //   console.log("allTracksElement", allTracksElement);
-    // });
-
-    // const allTracksElement = document.querySelectorAll('.')
-
-    // allPlaylistElement.forEach((singleEl) => {
-    //   singleEl.classList.add("playlist--collapse"); //parentnode
-
-    //   const activePlayList = document.querySelector(".playlist--collapse");
-    //   activePlayList.forEach((activEl) => {
-    //     activEl.classList.add("playlist--collapse--active");
+    //   myPlaylist.forEach((trucks) => {
+    //     console.log("idziee", trucks);
+    //     trucks.addEventListener("click", (ev) => {
+    //       ev.classList.add("accordian__content-trackList--active");
+    //     });
     //   });
     // });
   }

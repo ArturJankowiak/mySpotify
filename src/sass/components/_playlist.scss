@@ -78,6 +78,18 @@
   }
 }
 
+.accordian__content {
+  display: none;
+}
+
+.accordian__content-trackList--active {
+  display: flex;
+  width: 200px;
+  height: 400px;
+  background-color: rgb(245, 247, 159);
+  color: #e0e0e0;
+}
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 375px) {
   .playlist__container {
     margin-right: 0;
