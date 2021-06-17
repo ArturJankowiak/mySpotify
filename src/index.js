@@ -6,6 +6,7 @@ import {
 } from "../node_modules/@fortawesome/fontawesome-svg-core";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 config.autoA11y = true;
 
