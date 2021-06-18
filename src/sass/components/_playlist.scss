@@ -79,22 +79,28 @@
   display: flex;
   width: 100%;
   background-color: $playlist-bgc-color;
-  color: #24262b;
   margin-top: 8px;
   margin-bottom: 8px;
   font-weight: 400;
-  color: #212121;
+  color: rgb(128, 128, 128);
   font-family: $font-family;
   font-size: 14px;
   line-height: 22px;
+
+  &--active {
+    display: flex;
+    width: 100%;
+    background-color: $playlist-bgc-color;
+    color: #24262b;
+  }
 }
 
-.accordian__content-trackList--active {
-  display: flex;
-  width: 100%;
-  background-color: $playlist-bgc-color;
-  color: #24262b;
-}
+// .accordian__content-trackList--active {
+//   display: flex;
+//   width: 100%;
+//   background-color: $playlist-bgc-color;
+//   color: #24262b;
+// }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 375px) {
   .playlist__container {

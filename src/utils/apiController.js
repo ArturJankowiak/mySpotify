@@ -180,6 +180,7 @@ export class APIController {
           btn.addEventListener("click", (e) => {
             e.preventDefault();
             if (this.activePlaylistId && this.activePlaylistId !== "") {
+              console.log(activePlaylistId);
               const albumURI = btn.getAttribute("data-track-uri");
               this.addAlbumsToPlaylist(albumURI);
             } else {
@@ -253,6 +254,7 @@ export class APIController {
         );
         playlist.parentNode.classList.add("playlist__wrapper--item--active");
         this.activePlaylistId = playlist.getAttribute("data-playlist-id");
+        console.log("activePlaylistId", activePlaylistId);
       });
     });
   }
@@ -287,18 +289,17 @@ export class APIController {
         trackListHTML += "</ul>";
         console.log("accordianContent", accordianContent);
         accordianContent.innerHTML = trackListHTML;
+      })
+
+      .then(() => {
+        const myOpenPlaylist = document.querySelector(
+          ".accordian__content-trackList--active"
+        );
+        console.log("myOpenPlaylist", myOpenPlaylist);
+        myOpenPlaylist.addEventListener("click", () => {
+          myOpenPlaylist.classList.add("accordian__content");
+        });
       });
-    // .then(() => {
-    //   const myPlaylist = document.querySelectorAll(
-    //     ".accordian__content-trackList"
-    //   );
-    //   myPlaylist.forEach((trucks) => {
-    //     console.log("idziee", trucks);
-    //     trucks.addEventListener("click", (ev) => {
-    //       ev.classList.add("accordian__content-trackList--active");
-    //     });
-    //   });
-    // });
   }
 
   init() {

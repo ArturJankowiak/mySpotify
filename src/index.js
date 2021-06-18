@@ -58,7 +58,7 @@ const list_items = [
   "Item 17",
   "Item 18",
 ];
-// const list_items = document.querySelector(".album-tile__wrapper");
+
 const list_element = document.getElementById("list");
 const pagination_element = document.getElementById("pagination");
 
@@ -111,7 +111,6 @@ function PaginaionButton(page, items) {
     );
 
     displayList(items, list_element, rows, current_page);
-    console.log("items", items);
 
     let current_btn = document.querySelector(".pagenumbers button.active");
     current_btn.classList.remove("active");
@@ -124,14 +123,3 @@ function PaginaionButton(page, items) {
 
 displayList(list_items, list_element, rows, current_page);
 setupPagination(list_items, pagination_element, rows);
-
-// console.log(
-//   "list_items",
-//   list_items,
-//   "list_element",
-//   list_element,
-//   "rows",
-//   rows,
-//   "current_page",
-//   current_page
-// );
