@@ -180,7 +180,6 @@ export class APIController {
           btn.addEventListener("click", (e) => {
             e.preventDefault();
             if (this.activePlaylistId && this.activePlaylistId !== "") {
-              console.log(activePlaylistId);
               const albumURI = btn.getAttribute("data-track-uri");
               this.addAlbumsToPlaylist(albumURI);
             } else {
@@ -254,7 +253,7 @@ export class APIController {
         );
         playlist.parentNode.classList.add("playlist__wrapper--item--active");
         this.activePlaylistId = playlist.getAttribute("data-playlist-id");
-        console.log("activePlaylistId", activePlaylistId);
+        console.log("activePlaylistId", this.activePlaylistId);
       });
     });
   }
@@ -271,6 +270,7 @@ export class APIController {
       }
     )
       .then(() => alert("This song is added to the playlist."))
+      .then(() => this.getPlaylistItems(this.activePlaylistId))
       .catch((err) => alert(err));
   }
 

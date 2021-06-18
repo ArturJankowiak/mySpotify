@@ -59,30 +59,10 @@ const list_items = [
   "Item 18",
 ];
 
-const list_element = document.getElementById("list");
 const pagination_element = document.getElementById("pagination");
 
 let current_page = 2;
 let rows = 6;
-
-function displayList(items, wrapper, rows_per_page, page) {
-  wrapper.innerHTML = "";
-  page--;
-
-  let start = rows_per_page * page;
-  let end = start + rows_per_page;
-  let paginatedItems = items.slice(start, end);
-
-  for (let i = 0; i < paginatedItems.length; i++) {
-    let item = paginatedItems[i];
-
-    let item_element = document.createElement("div");
-    item_element.classList.add("item");
-    item_element.innerText = item;
-
-    wrapper.appendChild(item_element);
-  }
-}
 
 function setupPagination(items, wrapper, rows_per_page) {
   wrapper.innerHTML = "";
@@ -110,8 +90,6 @@ function PaginaionButton(page, items) {
       page
     );
 
-    displayList(items, list_element, rows, current_page);
-
     let current_btn = document.querySelector(".pagenumbers button.active");
     current_btn.classList.remove("active");
 
@@ -121,5 +99,4 @@ function PaginaionButton(page, items) {
   return button;
 }
 
-displayList(list_items, list_element, rows, current_page);
 setupPagination(list_items, pagination_element, rows);
